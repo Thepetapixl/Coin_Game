@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Coin Game</string>
+    <string name="text1">Welcome to the Coin Game!</string>
+    <string name="search">Search</string>
+    <string name="balance">Balance</string>
+    <string name="store">Store</string>
+    <string name="borrow">Borrow</string>
+    <string name="textview">TextView</string>
+    <string name="paragraph">Shop Items: \n\n\n
+
+        Apple ─ 2,600 coins,\n An apple a day keeps the what away?\n\n
+        Shredded Cheese ─ 10,000 coins,\n A mystic bag of light-golden shredded cheese.\n Perfect for on a pizza,
+        but more than likely \n to be consumed straight out of the bag.\n\n
+        Cookie ─ 10 coins,\n A nice, chocolate chip cookie to eat!</string>
+</resources>
