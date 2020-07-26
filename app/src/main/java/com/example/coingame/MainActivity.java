@@ -32,29 +32,10 @@ public class MainActivity extends AppCompatActivity {
     int[] storeValue = new int[] {100,250,300};
     String[] store = {"apple","cheese","cookie"};
     String[] strs = {" couch", " discord", " tree", " dog", " car", " pocket", " coat", " attic", " kitchen", " hospital"};
-    List<String> place = Arrays.asList(strs);
-    String str;
+    String str = "";
     boolean isSearched = false;
 
-    public void searchRandom(View view){
-
-        ArrayList<Integer> num = new ArrayList<>();
-
-        for(int n = 0; n <= 200; n++){
-            num.add(n);
-        }
-
-        Random random = new Random();
-        int position = random.nextInt(num.size());
-        int c = num.get(position);
-
-        Balance = Balance + c;
-
-        Toast.makeText(getApplicationContext(), "Rupees " + c, Toast.LENGTH_LONG).show();
-
-
-    }
-
+    //private static int SPLASH_TIME_OUT = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +49,15 @@ public class MainActivity extends AppCompatActivity {
         Go = findViewById(R.id.button5);
         textview = findViewById(R.id.textView);
         Text = findViewById(R.id.editText);
+
+        /*new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent OpeningWin = new Intent(MainActivity.this, OpeningWinDesign.class);
+                startActivity(OpeningWin);
+                finish();
+            }
+        },SPLASH_TIME_OUT);*/
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     textview.setText("Where do you want to search " + str + " ?");
                     String c = Text.getText().toString().trim().toLowerCase();
                     if(isSearchItem(c)) {
-                        addBalance();
+                        addBalance(1);
                     }
                     else{
                         Toast.makeText(MainActivity.this,"Please Enter a Value",Toast.LENGTH_SHORT).show();
@@ -97,22 +87,9 @@ public class MainActivity extends AppCompatActivity {
         btnBorrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                ArrayList<Integer> num = new ArrayList<>();
-
-                for(int n = 0; n <= 100; n++){
-                    num.add(n);
+                if(isBorrowed()) {
+                    addBalance(1);
                 }
-
-                Random random = new Random();
-                int position = random.nextInt(num.size());
-                int c = num.get(position);
-
-                Balance = Balance + c;
-
-                Toast.makeText(getApplicationContext(), "You Got Rupees " + c, Toast.LENGTH_LONG).show();
-
-
             }
         });
 
@@ -137,29 +114,38 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-            String userInput = Text.getText().toString().trim().toLowerCase();
-            boolean isPresent = isSearchItem(userInput);
-            if(isPresent){
-                int Cost = storeValue[position];
+                String userInput = Text.getText().toString().trim().toLowerCase();
+                boolean isPresent = isSearchItem(userInput);
 
-                if (Balance < Cost) {
-                    Toast.makeText(getApplicationContext(), "You do not have Sufficient Balance to make the purchase", Toast.LENGTH_LONG).show();
+                if (userInput.isEmpty()) {
+
                 } else {
-                    Balance = Balance - Cost;
-                    Toast.makeText(getApplicationContext(), "Purchase successful", Toast.LENGTH_LONG).show();
-                    Text.setText(" ");
-                }
-            }else {
-                if (str.contains(userInput)) {
-                    if(!isSearched) {
-                        addBalance();
-                    }else{
-                        Toast.makeText(MainActivity.this,"Please wait for sometime",Toast.LENGTH_SHORT).show();
+                    if (str.isEmpty()) {
+
+                    } else {
+                        if (isPresent) {
+                            int Cost = storeValue[position];
+
+                            if (Balance < Cost) {
+                                Toast.makeText(getApplicationContext(), "You do not have Sufficient Balance to make the purchase", Toast.LENGTH_LONG).show();
+                            } else {
+                                Balance = Balance - Cost;
+                                Toast.makeText(getApplicationContext(), "Purchase successful", Toast.LENGTH_LONG).show();
+                                Text.setText(" ");
+                            }
+                        } else {
+                            if (str.contains(userInput)) {
+                                if (!isSearched) {
+                                    addBalance(1);
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Please wait for sometime", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Enter a valid item", Toast.LENGTH_LONG).show();
+                            }
+                        }
                     }
-                } else{
-                    Toast.makeText(getApplicationContext(), "Enter a valid item", Toast.LENGTH_LONG).show();
-            }
-            }
+                }
             }
         });
     }
@@ -176,9 +162,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void addBalance(){
+    public void addBalance(int Check){
         isSearched = true;
-        delaySearch();
+        if(Check == 1){
+            delaySearch();
+        }
         ArrayList<Integer> num = new ArrayList<>();
 
         for(int n = 0; n <= 200; n++){
@@ -197,7 +185,6 @@ public class MainActivity extends AppCompatActivity {
         textview.setText(" ");
     }
 
-
     public void delaySearch(){
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -205,6 +192,11 @@ public class MainActivity extends AppCompatActivity {
                 isSearched = false;
             }
         },10000);
+    }
+
+    public boolean isBorrowed(){
+            delaySearch();
+            return true;
     }
 
 }
