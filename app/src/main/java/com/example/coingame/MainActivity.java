@@ -2,6 +2,7 @@ package com.example.coingame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {                                                        //SEARCH Button
                 Go.setVisibility(View.VISIBLE);
@@ -139,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             if (str.contains(userInput)) {
                                 if (!isSearched) {
-
                                     Check(userInput,0);
                                 } else {
                                     Toast.makeText(MainActivity.this, "Please wait for sometime", Toast.LENGTH_SHORT).show();

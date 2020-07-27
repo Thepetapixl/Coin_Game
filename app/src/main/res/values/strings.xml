@@ -35,5 +35,9 @@
 
     \n You will not be able to search and borrow constantly, there will be. Time delay of a few seconds before searching again.
     </string>
+    <string name="go">Go</string>
+    <string name="facts">Facts</string>
+    <string name="enter_the_name_here">Enter the name here</string>
+    <string name="balance">Balance</string>
 
 </resources>
