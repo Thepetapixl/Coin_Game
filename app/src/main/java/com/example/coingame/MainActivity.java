@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     int Flag = 0;
     int Balance = 0;
     int position = 0;
-    int[] storeValue = new int[] {2600,10000,1000};
+    int[] storeValue = new int[] {2600,10000,10};
     String[] store = {"apple","cheese","cookie"};
     String[] strs = {" couch", " discord", " tree", " dog", " car", " pocket", " coat", " attic", " kitchen", " hospital"};
     String str = "";
