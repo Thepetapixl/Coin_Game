@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,13 +34,13 @@ public class secondpopup extends AppCompatActivity {
 
         if(itemName.equals("apple")){
             image.setImageResource(R.drawable.apple);
-            text.setText("" + cost);
+            text.setText("You successfully bought " + itemName + " for "+ cost +" Coins ");
         }else if(itemName.equals("cheese")){
             image.setImageResource(R.drawable.cheese);
-            text.setText(" You successfully bought " + itemName + " for" + cost);
-        }else if(itemName.equals("Cookie")){
-            image.setImageResource(R.drawable.cookie);
-            text.setText(" You successfully bought " + itemName + " for"+ cost);
+            text.setText(" You successfully bought " + itemName + " for " + cost + " Coins" );
+        }else if(itemName.equals("cookie")){
+            image.setImageDrawable(getResources().getDrawable(R.drawable.cookie));
+            text.setText(" You successfully bought " + itemName + " for "+ cost + " Coins ");
         }
 
     }

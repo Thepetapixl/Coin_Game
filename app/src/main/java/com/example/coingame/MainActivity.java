@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     int Flag = 0;
     int Balance = 0;
     int position = 0;
-    int[] storeValue = new int[] {100,10000,100};
+    int[] storeValue = new int[] {2600,10000,1000};
     String[] store = {"apple","cheese","cookie"};
     String[] strs = {" couch", " discord", " tree", " dog", " car", " pocket", " coat", " attic", " kitchen", " hospital"};
     String str = "";
@@ -65,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
                 Go.setVisibility(View.VISIBLE);
                 if(!isSearched) {
                     str = "";
+                    isSearched = true;
+                    delaySearch();
                     for (int j = 0; j < 3; j++) {
                         Random textrandom = new Random();
                         int positiontext = textrandom.nextInt(strs.length);
@@ -89,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(!isBorrow) {
                     isBorrow = true;
+                    delayBorrow();
                     String c = "Game";
                     Check(c,1);
                 }else{
@@ -116,9 +121,6 @@ public class MainActivity extends AppCompatActivity {
                 if (userInput.isEmpty()) {
                         Toast.makeText(getApplicationContext(), "Please Enter an item or place", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (str.isEmpty()) {
-
-                    } else {
                         if (isPresent) {
                             int Cost = storeValue[position];
 
@@ -148,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
-            }
         });
 
         Facts.setOnClickListener(new View.OnClickListener() {                                       //FACT Button
@@ -189,15 +190,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Check(String item, int Flag){
-        isSearched = true;
-        isBorrow = true;
         String Checkeditem = item;
 
         if(Flag == 0) {
-            delaySearch();
             addBalance(Checkeditem);
         }else if(Flag == 1){
-            delayBorrow();
             addBalance(Checkeditem);
         }
 
@@ -217,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
 
         Balance = Balance + c;
 
-        Toast.makeText(getApplicationContext(), "You got Rupees " + c + " in " + item , Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "You got " + c + " Coins in " + item , Toast.LENGTH_LONG).show();
         Text.setText(" ");
         textview.setText(" ");
         DisplayBal.setText(String.valueOf(Balance));
@@ -229,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 isSearched = false;
             }
-        },10000);
+        },5000);
     }
 
     public void delayBorrow(){
@@ -238,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 isBorrow = false;
             }
-        },10000);
+        },7000);
     }
 
 }
