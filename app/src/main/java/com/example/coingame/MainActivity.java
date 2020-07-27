@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,24 +20,28 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    //All Variable Declarations
     private Button btnSearch;
     private Button btnBorrow;
-    private Button btnBalance;
     private Button btnShop;
+    private Button Facts;
     private Button Go;
     private EditText Text;
     private TextView textview;
+    private TextView DisplayBal;
 
 
+    int Flag = 0;
     int Balance = 0;
     int position = 0;
-    int[] storeValue = new int[] {100,250,300};
+    int[] storeValue = new int[] {100,10000,100};
     String[] store = {"apple","cheese","cookie"};
     String[] strs = {" couch", " discord", " tree", " dog", " car", " pocket", " coat", " attic", " kitchen", " hospital"};
     String str = "";
+    String Fact = "";
     boolean isSearched = false;
-
-    //private static int SPLASH_TIME_OUT = 2;
+    boolean isBorrow = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,25 +50,19 @@ public class MainActivity extends AppCompatActivity {
 
         btnSearch = findViewById(R.id.button1);
         btnBorrow = findViewById(R.id.button2);
-        btnBalance = findViewById(R.id.button3);
         btnShop = findViewById(R.id.button4);
         Go = findViewById(R.id.button5);
         textview = findViewById(R.id.textView);
         Text = findViewById(R.id.editText);
+        Facts = findViewById(R.id.buttonfact);
+        DisplayBal = findViewById(R.id.textdisplaybal);
 
-        /*new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent OpeningWin = new Intent(MainActivity.this, OpeningWinDesign.class);
-                startActivity(OpeningWin);
-                finish();
-            }
-        },SPLASH_TIME_OUT);*/
+
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View view) {                                                        //SEARCH Button
+                Go.setVisibility(View.VISIBLE);
                 if(!isSearched) {
                     str = "";
                     for (int j = 0; j < 3; j++) {
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     textview.setText("Where do you want to search " + str + " ?");
                     String c = Text.getText().toString().trim().toLowerCase();
                     if(isSearchItem(c)) {
-                        addBalance(1);
+                        Check(c,0);
                     }
                     else{
                         Toast.makeText(MainActivity.this,"Please Enter a Value",Toast.LENGTH_SHORT).show();
@@ -84,33 +84,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnBorrow.setOnClickListener(new View.OnClickListener() {
+        btnBorrow.setOnClickListener(new View.OnClickListener() {                                   //BORROW Button
             @Override
             public void onClick(View view) {
-                if(isBorrowed()) {
-                    addBalance(1);
+                if(!isBorrow) {
+                    isBorrow = true;
+                    String c = "Game";
+                    Check(c,1);
+                }else{
+                    Toast.makeText(MainActivity.this,"Try after some time.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        btnBalance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Your current Balance is " + Balance , Toast.LENGTH_LONG).show();
-            }
-        });
-
-        btnShop.setOnClickListener(new View.OnClickListener() {
+        btnShop.setOnClickListener(new View.OnClickListener() {                                     //SHOP Button
             @Override
             public void onClick(View view) {
 
                 startActivity(new Intent(MainActivity.this, Pop.class));
 
-
             }
         });
 
-        Go.setOnClickListener(new View.OnClickListener() {
+        Go.setOnClickListener(new View.OnClickListener() {                                          //GO Button
             @Override
             public void onClick(View view) {
 
@@ -118,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 boolean isPresent = isSearchItem(userInput);
 
                 if (userInput.isEmpty()) {
-
+                        Toast.makeText(getApplicationContext(), "Please Enter an item or place", Toast.LENGTH_SHORT).show();
                 } else {
                     if (str.isEmpty()) {
 
@@ -132,11 +128,17 @@ public class MainActivity extends AppCompatActivity {
                                 Balance = Balance - Cost;
                                 Toast.makeText(getApplicationContext(), "Purchase successful", Toast.LENGTH_LONG).show();
                                 Text.setText(" ");
+                                DisplayBal.setText(String.valueOf(Balance));
+                                Intent intent = new Intent(MainActivity.this,secondpopup.class);
+                                intent.putExtra("name",userInput);
+                                intent.putExtra("cost",String.valueOf(Cost));
+                                startActivity(intent);
                             }
                         } else {
                             if (str.contains(userInput)) {
                                 if (!isSearched) {
-                                    addBalance(1);
+
+                                    Check(userInput,0);
                                 } else {
                                     Toast.makeText(MainActivity.this, "Please wait for sometime", Toast.LENGTH_SHORT).show();
                                 }
@@ -148,9 +150,33 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Facts.setOnClickListener(new View.OnClickListener() {                                       //FACT Button
+            @Override
+            public void onClick(View view) {
+                if (Flag == 0) {
+                    Fact = getString(R.string.Fact1);
+                    textview.setText(Fact);
+                    Flag = 1;
+                }else if(Flag == 1){
+                    Fact = getString(R.string.Fact2);
+                    textview.setText(Fact);
+                    Flag = 2;
+                }else{
+                    Fact = getString(R.string.Fact3);
+                    textview.setText(Fact);
+                    Flag = 0;
+                }
+            }
+        });
     }
 
-    public boolean isSearchItem(String userInput){
+    public void Click(View view){
+        startActivity(new Intent(MainActivity.this, Instructions.class));
+    }
+
+
+    public boolean isSearchItem(String userInput){                                                  //Searches if item entered is in the shop
 
         for(int i = 0;i < store.length; i++){
             if(store[i].toLowerCase().equals(userInput)){
@@ -162,11 +188,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void addBalance(int Check){
+    public void Check(String item, int Flag){
         isSearched = true;
-        if(Check == 1){
+        isBorrow = true;
+        String Checkeditem = item;
+
+        if(Flag == 0) {
             delaySearch();
+            addBalance(Checkeditem);
+        }else if(Flag == 1){
+            delayBorrow();
+            addBalance(Checkeditem);
         }
+
+    }
+
+    public void addBalance( String item){                                                           //Function which adds the balance from searching and borrowing
+
         ArrayList<Integer> num = new ArrayList<>();
 
         for(int n = 0; n <= 200; n++){
@@ -179,13 +217,13 @@ public class MainActivity extends AppCompatActivity {
 
         Balance = Balance + c;
 
-        Toast.makeText(getApplicationContext(), "Rupees " + c, Toast.LENGTH_LONG).show();
-
+        Toast.makeText(getApplicationContext(), "You got Rupees " + c + " in " + item , Toast.LENGTH_LONG).show();
         Text.setText(" ");
         textview.setText(" ");
+        DisplayBal.setText(String.valueOf(Balance));
     }
 
-    public void delaySearch(){
+    public void delaySearch(){                                                                      //Delays the user from Searching too frequently
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -194,9 +232,13 @@ public class MainActivity extends AppCompatActivity {
         },10000);
     }
 
-    public boolean isBorrowed(){
-            delaySearch();
-            return true;
+    public void delayBorrow(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isBorrow = false;
+            }
+        },10000);
     }
 
 }

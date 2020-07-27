@@ -12,4 +12,28 @@
         Shredded Cheese ─ 10,000 coins,\n A mystic bag of light-golden shredded cheese.\n Perfect for on a pizza,
         but more than likely \n to be consumed straight out of the bag.\n\n
         Cookie ─ 10 coins,\n A nice, chocolate chip cookie to eat!</string>
+
+    <string name="Fact1">Grapes light on fire in the microwave.</string>
+    <string name="Fact2">McDonald\'s once created bubblegum flavored broccoli.</string>
+    <string name="Fact3">The average U.S. household has 300,000 things in it.</string>
+    <string name="Instructions">How to play:\n\n
+
+    As you see there are 5 buttons namely Search, Borrow, Balance, Shop and Go.\n\n
+
+    Search allows you to earn coins by searching in a specific area, once you click the button, 3 options will appear on the BROWN text view/Bar.\n
+
+    \n Type in the choice in the text box on the left of the “Go” button from where you want to search and click “Go”. \n
+
+    You will receive coins after pressing the go button.
+
+    \n\n Borrow has pretty much the same purpose but you will not get an option where you can choose where or whom to borrow from, you will be given a an amount after clicking the button.\n
+
+    \n Balance as the name suggests tells you the current balance which you have.\n
+
+    \n Shop will open a screen where you will see a list of items which you can buy, after reading the options please type in your choice in the text box on the left of the “Go” button,
+        after entering your choice click the Go button to complete your purchase.\n
+
+    \n You will not be able to search and borrow constantly, there will be. Time delay of a few seconds before searching again.
+    </string>
+
 </resources>

@@ -5,6 +5,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/vrgaming"/>
+            android:src="@drawable/facemask"/>
     </item>
 </layer-list>
